@@ -216,6 +216,9 @@ def lat_mismatch( a0_a, brav_a, n_layers_a, \
                     pos[idx] = np.matmul( lat_a, bas_a[i]+shift)
                     typ[idx] = typ_a[i]
                     idx+=1
+    print("last z value of sys A:",pos[idx-1][2])
+    print("sys A indices:",0,":",idx-1)
+    print("sys B indices:",idx,":", nat_tot)
     for xx in range(h):
         for yy in range(h):
             for zz in range( n_layers_b ):
