@@ -201,6 +201,14 @@ def lat_mismatch( a0_a, brav_a, n_layers_a, \
                         np.matmul(lat_a, np.array([0.0,0.0,maxz])) + \
                         np.array([0.0, 0.0, interlattice_dist+vacuum]) \
                         ])
+#    lat_tot = np.array([a1_b*h, \
+#                        a2_b*h, \
+#                        a3_a*n_layers_a + a3_b*n_layers_b - \
+#                        np.matmul(lat_a, np.array([0.0,0.0,maxz])) + \
+#                        np.array([0.0, 0.0, interlattice_dist+vacuum]) \
+#                        ])
+#
+
 
     # accumulate positions and atomic types
     pos = np.ndarray([nat_tot,3],dtype=float)
@@ -302,9 +310,10 @@ def random_species(chemistry, natoms, seed=None):
 
 # test main func
 if __name__ == "__main__":
-    struc = lat_mismatch( a0_a=3.12, brav_a="bcc", n_layers_a=9, \
-                          a0_b=3.19, brav_b="bcc", n_layers_b=9, \
-                          interlattice_dist=1.9, vacuum=20.0 \
+    struc = lat_mismatch( a0_a=3.19, brav_a="bcc", n_layers_a=9, \
+                          a0_b=3.125, brav_b="bcc", n_layers_b=20, \
+                          interlattice_dist=1.6, vacuum=40.0, \
+                          kmax=100, nmin=2 \
                    )
 
     chem={
@@ -330,4 +339,6 @@ if __name__ == "__main__":
     struc.set_chemical_symbols( spec )
 
     from ase.io import write
-    write( "tt.xyz", struc, format="extxyz")
+    write( "tt.lmp", struc, format="lammps-data",
+            atom_style="atomic", 
+            specorder=["Cr", "Ta", "V", "W"] )
